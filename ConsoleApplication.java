@@ -1,10 +1,11 @@
 import java.sql.*;
 import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Main {
     public  static final  String USER_NAME = "root";
-    public  static final  String PASSWORD = "123456";
+    public  static final  String PASSWORD = "*";
     public  static final  String URL = "jdbc:mysql://localhost:3306/mysql";
     public  static Statement statement;
     public  static Connection connection;
@@ -33,16 +34,28 @@ public class Main {
     }
 
     public static void main(String[] args) throws  ClassNotFoundException, SQLException, IOException {
+
+
+            try (Connection connection = DriverManager.getConnection(URL,USER_NAME, PASSWORD); Statement statement = connection.createStatement() ) {
+                Scanner sc = new Scanner(System.in);
+                int SQLQuery = statement.executeUpdate(sc.nextLine());
+                System.out.println(SQLQuery);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
             ResultSet resultSet = statement.executeQuery("SELECT * FROM testsystem.teacher");
 
 
 
-            try (Connection connection =DriverManager.getConnection(URL,USER_NAME,PASSWORD) ; Statement statement=connection.createStatement() ) {
-                 int resultSet1 = statement.executeUpdate("UPDATE testsystem.teacher SET name='Надежда' WHERE idteacher=2");
-                 System.out.println(resultSet1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            try (Connection connection =DriverManager.getConnection(URL,USER_NAME,PASSWORD) ; Statement statement=connection.createStatement() ) {
+//                 int resultSet1 = statement.executeUpdate("UPDATE testsystem.teacher SET name='Надежда' WHERE idteacher=2");
+//                 System.out.println(resultSet1);
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
 
 
             System.out.println(" _____________________________________________________________________");
